@@ -60,6 +60,9 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
   protected <T> T internalValueOfString(final String value, final Boolean isNullable, final Integer maxLength,
       final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
       throws EdmPrimitiveTypeException {
+    if (value==null || "".equals(value)) {
+      return null;
+    }
     try {
       ZonedDateTime zdt = parseZonedDateTime(value);
 
