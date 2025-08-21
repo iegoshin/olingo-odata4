@@ -20,6 +20,7 @@ package org.apache.olingo.commons.core.edm.primitivetype;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -80,12 +81,18 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
       // ISO-8601 conform pattern
       zdt = ZonedDateTime.parse(value);
     } catch (DateTimeParseException ex) {
-      // for backward compatibility - allow patterns that don't specify a time zone
-      final Matcher matcher = PATTERN.matcher(value);
-      if (matcher.matches() && matcher.group(9) == null) {
-        zdt = ZonedDateTime.parse(value + "Z");
-      } else {
-        throw ex;
+      try {
+        LocalDate ld = LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE);
+        // start of day in UTC
+        zdt = ld.atStartOfDay(ZoneOffset.UTC);
+      } catch (DateTimeParseException e2) {
+        // for backward compatibility - allow patterns that don't specify a time zone
+        final Matcher matcher = PATTERN.matcher(value);
+        if (matcher.matches() && matcher.group(9) == null) {
+          zdt = ZonedDateTime.parse(value + "Z");
+        } else {
+          throw ex;
+        }
       }
     }
     return zdt;
