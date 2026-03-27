@@ -59,6 +59,16 @@ public abstract class AbstractEdmAnnotatable implements EdmAnnotatable {
   }
 
   @Override
+  public EdmAnnotation getAnnotation(final String termName) {
+    for (EdmAnnotation annotation : getAnnotations()) {
+      if (termName.equals(annotation.getTermAsString())) {
+        return annotation;
+      }
+    }
+    return null;
+  }
+
+  @Override
   public List<EdmAnnotation> getAnnotations() {
     if (annotations == null) {
       final List<EdmAnnotation> annotationsLocal = new ArrayList<EdmAnnotation>();

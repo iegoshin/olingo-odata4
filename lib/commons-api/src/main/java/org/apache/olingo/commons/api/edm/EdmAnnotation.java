@@ -38,4 +38,6 @@ public interface EdmAnnotation extends EdmAnnotatable {
   String getQualifier();
 
   EdmExpression getExpression();
+
+  String getExpressionAsString();
 }

@@ -38,4 +38,6 @@ public interface EdmAnnotatable {
    * @return list of all annotations
    */
   List<EdmAnnotation> getAnnotations();
+
+  EdmAnnotation getAnnotation(String termName);
 }

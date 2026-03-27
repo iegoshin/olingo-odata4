@@ -25,6 +25,8 @@ import org.apache.olingo.commons.api.edm.EdmTerm;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.annotation.EdmExpression;
 import org.apache.olingo.commons.api.edm.provider.CsdlAnnotation;
+import org.apache.olingo.commons.api.edm.provider.annotation.CsdlConstantExpression;
+import org.apache.olingo.commons.api.edm.provider.annotation.CsdlExpression;
 import org.apache.olingo.commons.core.edm.annotation.AbstractEdmExpression;
 
 public class EdmAnnotationImpl extends AbstractEdmAnnotatable implements EdmAnnotation {
@@ -67,5 +69,14 @@ public class EdmAnnotationImpl extends AbstractEdmAnnotatable implements EdmAnno
       expression = AbstractEdmExpression.getExpression(edm, annotation.getExpression());
     }
     return expression;
+  }
+
+  @Override
+  public String getExpressionAsString() {
+    CsdlExpression expr = annotation.getExpression();
+    if (expr instanceof CsdlConstantExpression) {
+      return ((CsdlConstantExpression) expr).getValue();
+    }
+    return null;
   }
 }

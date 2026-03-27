@@ -310,6 +310,13 @@
   </dependencyManagement>
 
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>3.5.1</version>
+      </extension>
+    </extensions>
     <finalName>${project.name}-${project.version}</finalName>
 
     <pluginManagement>
@@ -661,4 +668,17 @@
       </build>
     </profile>
   </profiles>
+
+  <distributionManagement>
+    <repository>
+      <id>mrp</id>
+      <name>MRP Repo</name>
+      <url>scp://mavenrepo.myrealpage.com:/data/vol2/sites/mavenrepo.myrealpage.com/m2/repo</url>
+    </repository>
+    <snapshotRepository>
+      <id>mrp</id>
+      <name>MRP Repo</name>
+      <url>scp://mavenrepo.myrealpage.com:/data/vol2/sites/mavenrepo.myrealpage.com/m2/repo</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
