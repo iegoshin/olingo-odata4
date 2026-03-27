@@ -161,7 +161,9 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
       annot = getAnnotation("RESO.OData.Metadata.LookupName");
     }
     if (annot != null) {
-      return annot.getExpressionAsString();
+      String lookupName = annot.getExpressionAsString();
+      if (!"".equals(lookupName) && !"null".equals(lookupName))
+        return lookupName;
     }
     return null;
   }
