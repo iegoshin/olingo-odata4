@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.olingo.commons.api.edm.EdmAnnotation;
+import org.apache.olingo.commons.api.edm.EdmComplexType;
+import org.apache.olingo.commons.api.edm.EdmEnumType;
 import org.apache.olingo.commons.api.edm.EdmMapping;
 import org.apache.olingo.commons.api.edm.EdmProperty;
 import org.apache.olingo.commons.api.edm.EdmTerm;
@@ -142,5 +144,50 @@ public class DynamicProperty implements EdmProperty {
   public DynamicProperty setScaleAsString(String scaleAsString) {
 	this.scaleAsString = scaleAsString;
 	return this;
+  }
+
+  @Override
+  public EdmAnnotation getAnnotation(final String termName) {
+    return null;
+  }
+
+  @Override
+  public String getLookupName() {
+    return null;
+  }
+
+  @Override
+  public String getLookupId() {
+    return null;
+  }
+
+  @Override
+  public EdmEnumType getLookup() {
+    return null;
+  }
+
+  @Override
+  public String getLabel() {
+    return name;
+  }
+
+  @Override
+  public boolean isSearchable() {
+    return false;
+  }
+
+  @Override
+  public EdmComplexType getComplexType() {
+    return null;
+  }
+
+  @Override
+  public boolean isComplex() {
+    return false;
+  }
+
+  @Override
+  public boolean isEnum() {
+    return false;
   }
 }

@@ -87,4 +87,20 @@ public interface EdmProperty extends EdmElement, EdmMappable, EdmAnnotatable {
    * @return {@link EdmType}
    */
   EdmType getTypeWithAnnotations();
+
+  String getLookupName();
+
+  String getLookupId();
+
+  EdmEnumType getLookup();
+
+  String getLabel();
+
+  boolean isSearchable();
+
+  EdmComplexType getComplexType();
+
+  boolean isComplex();
+
+  boolean isEnum();
 }

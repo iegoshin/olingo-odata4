@@ -206,4 +206,6 @@ public interface Edm {
    * @return {@link EdmAnnotations}
    */
   EdmAnnotations getAnnotationGroup(FullQualifiedName targetName, String qualifier);
+
+  EdmEntityType getEntityType(String name);
 }

@@ -27,4 +27,6 @@ public interface EdmMember extends EdmNamed, EdmAnnotatable {
    * @return value of this member as string
    */
   String getValue();
+
+  String getLabel();
 }

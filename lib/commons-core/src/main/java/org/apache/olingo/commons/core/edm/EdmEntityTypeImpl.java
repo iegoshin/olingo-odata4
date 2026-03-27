@@ -143,4 +143,13 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
     }
     return false;
   }
+
+  @Override
+  public String getPrimaryKey() {
+    List<EdmKeyPropertyRef> keyRefs = getKeyPropertyRefs();
+    if (keyRefs != null && !keyRefs.isEmpty()) {
+      return keyRefs.get(0).getName();
+    }
+    return null;
+  }
 }

@@ -19,6 +19,7 @@
 package org.apache.olingo.commons.core.edm;
 
 import org.apache.olingo.commons.api.edm.Edm;
+import org.apache.olingo.commons.api.edm.EdmAnnotation;
 import org.apache.olingo.commons.api.edm.EdmMember;
 import org.apache.olingo.commons.api.edm.provider.CsdlEnumMember;
 
@@ -34,5 +35,26 @@ public class EdmMemberImpl extends AbstractEdmNamed implements EdmMember {
   @Override
   public String getValue() {
     return member.getValue();
+  }
+
+  @Override
+  public String getLabel() {
+    for (EdmAnnotation annot : getAnnotations()) {
+      String term = annot.getTermAsString();
+      if ("RESO.OData.Metadata.StandardName".equals(term)
+          || "RESO.OData.Metadata.TrestleName".equals(term)
+          || "MLS.OData.Metadata.mred".equals(term)
+          || "Core.Description".equals(term)
+          || "DDF.Core.Description".equals(term)) {
+        String value = annot.getExpressionAsString();
+        if (value != null) {
+          value = value.trim();
+          if (!value.isEmpty()) {
+            return value;
+          }
+        }
+      }
+    }
+    return getName();
   }
 }

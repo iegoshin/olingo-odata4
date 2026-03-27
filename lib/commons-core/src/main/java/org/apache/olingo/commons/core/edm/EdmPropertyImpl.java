@@ -19,6 +19,9 @@
 package org.apache.olingo.commons.core.edm;
 
 import org.apache.olingo.commons.api.edm.Edm;
+import org.apache.olingo.commons.api.edm.EdmAnnotation;
+import org.apache.olingo.commons.api.edm.EdmComplexType;
+import org.apache.olingo.commons.api.edm.EdmEnumType;
 import org.apache.olingo.commons.api.edm.EdmException;
 import org.apache.olingo.commons.api.edm.EdmMapping;
 import org.apache.olingo.commons.api.edm.EdmProperty;
@@ -145,5 +148,85 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
       buildTypeInfo();
     }
     return typeInfo.isPrimitiveType();
+  }
+
+  @Override
+  public String getLookupName() {
+    EdmType type = getType();
+    if (type instanceof EdmEnumType) {
+      return type.getName();
+    }
+    EdmAnnotation annot = getAnnotation("MLS.OData.Metadata.LookupName");
+    if (annot == null) {
+      annot = getAnnotation("RESO.OData.Metadata.LookupName");
+    }
+    if (annot != null) {
+      return annot.getExpressionAsString();
+    }
+    return null;
+  }
+
+  @Override
+  public String getLookupId() {
+    EdmType type = getType();
+    if (type instanceof EdmEnumType) {
+      return type.getFullQualifiedName().getFullQualifiedNameAsString();
+    }
+    return null;
+  }
+
+  @Override
+  public EdmEnumType getLookup() {
+    EdmType type = getType();
+    if (type instanceof EdmEnumType) {
+      return (EdmEnumType) type;
+    }
+    return null;
+  }
+
+  @Override
+  public String getLabel() {
+    for (EdmAnnotation annot : getAnnotations()) {
+      String term = annot.getTermAsString();
+      if ("RESO.OData.Metadata.StandardName".equals(term)
+          || "RESO.OData.Metadata.TrestleName".equals(term)
+          || "MLS.OData.Metadata.mred".equals(term)
+          || "Core.Description".equals(term)
+          || "DDF.Core.Description".equals(term)) {
+        String value = annot.getExpressionAsString();
+        if (value != null) {
+          value = value.trim();
+          if (!value.isEmpty()) {
+            return value;
+          }
+        }
+      }
+    }
+    return getName();
+  }
+
+  @Override
+  public boolean isSearchable() {
+    EdmAnnotation annot = getAnnotation("RESO.OData.Metadata.Searchable");
+    return annot != null && Boolean.parseBoolean(annot.getExpressionAsString());
+  }
+
+  @Override
+  public EdmComplexType getComplexType() {
+    EdmType type = getType();
+    if (type instanceof EdmComplexType) {
+      return (EdmComplexType) type;
+    }
+    return null;
+  }
+
+  @Override
+  public boolean isComplex() {
+    return getType() instanceof EdmComplexType;
+  }
+
+  @Override
+  public boolean isEnum() {
+    return getType() instanceof EdmEnumType;
   }
 }

@@ -391,6 +391,20 @@ public abstract class AbstractEdm implements Edm {
     return _annotations;
   }
 
+  @Override
+  public EdmEntityType getEntityType(final String name) {
+    if (name != null && name.contains(".")) {
+      return getEntityType(new FullQualifiedName(name));
+    }
+    for (EdmSchema schema : getSchemas()) {
+      EdmEntityType entityType = getEntityType(new FullQualifiedName(schema.getNamespace(), name));
+      if (entityType != null) {
+        return entityType;
+      }
+    }
+    return null;
+  }
+
   private FullQualifiedName resolvePossibleAlias(final FullQualifiedName namespaceOrAliasFQN) {
     if (aliasToNamespaceInfo == null) {
       loadAliasToNamespaceInfo();
