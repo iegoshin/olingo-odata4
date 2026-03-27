@@ -63,4 +63,6 @@ public interface EdmEntityType extends EdmStructuredType {
   EdmEntityType getBaseType();
 
   String getPrimaryKey();
+
+  String getLabel();
 }

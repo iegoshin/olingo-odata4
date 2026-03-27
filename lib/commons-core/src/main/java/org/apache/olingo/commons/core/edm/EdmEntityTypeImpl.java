@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.olingo.commons.api.edm.Edm;
+import org.apache.olingo.commons.api.edm.EdmAnnotation;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
 import org.apache.olingo.commons.api.edm.EdmException;
 import org.apache.olingo.commons.api.edm.EdmKeyPropertyRef;
@@ -151,5 +152,26 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
       return keyRefs.get(0).getName();
     }
     return null;
+  }
+
+  @Override
+  public String getLabel() {
+    for (EdmAnnotation annot : getAnnotations()) {
+      String term = annot.getTermAsString();
+      if ("RESO.OData.Metadata.StandardName".equals(term)
+          || "RESO.OData.Metadata.TrestleName".equals(term)
+          || "MLS.OData.Metadata.mred".equals(term)
+          || "Core.Description".equals(term)
+          || "DDF.Core.Description".equals(term)) {
+        String value = annot.getExpressionAsString();
+        if (value != null) {
+          value = value.trim();
+          if (!value.isEmpty()) {
+            return value;
+          }
+        }
+      }
+    }
+    return getName();
   }
 }
