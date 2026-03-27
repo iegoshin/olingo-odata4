@@ -96,7 +96,7 @@ public interface EdmProperty extends EdmElement, EdmMappable, EdmAnnotatable {
 
   String getLabel();
 
-  boolean isSearchable();
+  Boolean getSearchable();
 
   EdmComplexType getComplexType();
 

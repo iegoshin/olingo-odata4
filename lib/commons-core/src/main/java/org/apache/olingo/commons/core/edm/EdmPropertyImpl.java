@@ -209,9 +209,12 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
   }
 
   @Override
-  public boolean isSearchable() {
+  public Boolean getSearchable() {
     EdmAnnotation annot = getAnnotation("RESO.OData.Metadata.Searchable");
-    return annot != null && Boolean.parseBoolean(annot.getExpressionAsString());
+    if (annot != null) {
+      return Boolean.valueOf(annot.getExpressionAsString());
+    }
+    return null;
   }
 
   @Override

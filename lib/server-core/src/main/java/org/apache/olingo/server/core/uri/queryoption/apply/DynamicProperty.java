@@ -172,8 +172,8 @@ public class DynamicProperty implements EdmProperty {
   }
 
   @Override
-  public boolean isSearchable() {
-    return false;
+  public Boolean getSearchable() {
+    return null;
   }
 
   @Override
