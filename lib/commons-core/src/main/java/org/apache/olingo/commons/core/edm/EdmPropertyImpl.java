@@ -205,7 +205,14 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
         }
       }
     }
-    return getName();
+    String name = getName();
+    if (name != null) {
+      name = name.trim();
+      if (!name.isEmpty()) {
+        return name;
+      }
+    }
+    return null;
   }
 
   @Override

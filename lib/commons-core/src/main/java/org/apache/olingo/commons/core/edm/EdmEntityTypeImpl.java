@@ -172,6 +172,13 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
         }
       }
     }
-    return getName();
+    String name = getName();
+    if (name != null) {
+      name = name.trim();
+      if (!name.isEmpty()) {
+        return name;
+      }
+    }
+    return null;
   }
 }
